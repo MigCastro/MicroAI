@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>Micro AI</title>
-    <link rel="shortcut icon" href="/static/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="/static/media/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
@@ -12,6 +12,10 @@
         <div id="aiState" class="inactive">AI is sleeping</div>
         <div id="response"></div>
     </div>
+
+    <!-- Add Audio elements for playing audio files -->
+    <audio id="audioOn" src="{{ url_for('static', filename='media/on.wav') }}"></audio>
+    <audio id="audioOff" src="{{ url_for('static', filename='media/off.wav') }}"></audio>
 
     <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
