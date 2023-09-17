@@ -47,7 +47,7 @@ Feel free to contribute to this project by forking and submitting a pull request
 
 ## Issues
 
-If you encounter problems or have suggestions, open an issue [here](https://github.com/your-username/micro-ai/issues).
+If you encounter problems or have suggestions, open an issue [here](https://github.com/MigCastro/micro-ai/issues).
 
 ## License
 
