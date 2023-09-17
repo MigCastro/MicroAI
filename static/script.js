@@ -6,7 +6,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let aiStateValue = "off";
     aiState.textContent = "AI is sleeping";
-
     let heardMicro = false;
     let isSpeaking = false;
 
@@ -17,7 +16,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const questionRecognition = new webkitSpeechRecognition();
     questionRecognition.continuous = false;
     questionRecognition.interimResults = false;
-
     let activeRecognition = null;
 
     microRecognition.onresult = (event) => {
@@ -64,8 +62,8 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(data => {
                 console.log(data.message);
                 activateButton.textContent = "On";
-                if (audioOff.paused) { // Check if the 'off.wav' audio is not playing
-                    audioOn.play(); // Play the 'on.wav' audio
+                if (audioOff.paused) {
+                    audioOn.play();
                 }
             })
             .catch(error => {
@@ -76,57 +74,48 @@ document.addEventListener('DOMContentLoaded', () => {
             aiState.textContent = "AI is sleeping";
             responseDiv.textContent = '';
     
-            // Stop the active recognition
             if (activeRecognition) {
                 activeRecognition.stop();
                 activeRecognition = null;
             }
     
-            // Stop the microphone recording
             microRecognition.stop();
     
             heardMicro = false;
             updateButtonStyle();
             activateButton.textContent = "Off";
             
-            if (!audioOn.paused) { // Check if the 'on.wav' audio is playing
-                audioOn.pause(); // Pause the 'on.wav' audio
-                audioOn.currentTime = 0; // Reset the 'on.wav' audio to the beginning
+            if (!audioOn.paused) {
+                audioOn.pause();
+                audioOn.currentTime = 0;
             }
             
-            if (audioOff.paused) { // Check if the 'off.wav' audio is not playing
-                audioOff.play(); // Play the 'off.wav' audio
+            if (audioOff.paused) {
+                audioOff.play();
             }
     
-            // Check if AI is speaking and turn off the speech if it is
             if (isSpeaking) {
                 window.speechSynthesis.cancel();
                 isSpeaking = false;
             }
         }
     });
-    
 
     ttsButton.addEventListener('click', () => {
         const textToSpeak = responseDiv.textContent;
         if ('speechSynthesis' in window && textToSpeak) {
             const utterance = new SpeechSynthesisUtterance(textToSpeak);
             const voices = window.speechSynthesis.getVoices();
-            const selectedVoice = voices.find(voice => voice.name === 'Microsoft David Desktop - English (United States)'); // Change to the desired voice
+            const selectedVoice = voices.find(voice => voice.name === 'Microsoft David Desktop - English (United States)');
             utterance.voice = selectedVoice;
             window.speechSynthesis.speak(utterance);
-
-            // Set isSpeaking to true when speaking starts
             isSpeaking = true;
 
-            // Listen for the end of speech and check if AI is still active
             utterance.onend = () => {
                 if (aiStateValue === "off") {
-                    // If AI was turned off while speaking, stop the speech
                     window.speechSynthesis.cancel();
                     isSpeaking = false;
                 } else {
-                    // If AI is still active, turn the microphone back on to listen for "Micro"
                     activeRecognition = microRecognition;
                     microRecognition.start();
                 }
@@ -139,7 +128,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function askQuestion(userQuestion) {
-        console.log('Ask Question Function Called with:', userQuestion);
         fetch('/ask_question', {
             method: 'POST',
             headers: {
@@ -155,7 +143,6 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 responseDiv.innerHTML = data.response;
             }
-            // Add Text-to-Speech here if needed
             speakResponse(data.response);
         })
         .catch(error => {
@@ -164,25 +151,20 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     
-
     function speakResponse(text) {
         const utterance = new SpeechSynthesisUtterance(text);
         const voices = window.speechSynthesis.getVoices();
-        const selectedVoice = voices.find(voice => voice.name === 'Microsoft David Desktop - English (United States)'); // Change to the desired voice
+        const selectedVoice = voices.find(voice => voice.name === 'Microsoft David Desktop - English (United States)');
         utterance.voice = selectedVoice;
         window.speechSynthesis.speak(utterance);
 
-        // Set isSpeaking to true when speaking starts
         isSpeaking = true;
 
-        // Listen for the end of speech and check if AI is still active
         utterance.onend = () => {
             if (aiStateValue === "off") {
-                // If AI was turned off while speaking, stop the speech
                 window.speechSynthesis.cancel();
                 isSpeaking = false;
             } else {
-                // If AI is still active, turn the microphone back on to listen for "Micro"
                 activeRecognition = microRecognition;
                 microRecognition.start();
             }
