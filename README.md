@@ -39,9 +39,7 @@ python app.py
 
 5. You'll receive responses, which will also be displayed on the web page.
 
-6. Optionally, click "Text-to-Speech" to have responses spoken out loud.
-
-7. Click "Deactivate AI" to stop the voice assistant.
+6. Click the button again to stop the voice assistant.
 
 ## Contributing
 
