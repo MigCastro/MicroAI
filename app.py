@@ -4,7 +4,7 @@ import openai
 app = Flask(__name__, template_folder='templates')
 
 # Replace with your OpenAI API key
-OPENAI_API_KEY = 'YOUR_API_KEY_HERE'
+OPENAI_API_KEY = 'YOUE_API_KEY_HERE'
 openai.api_key = OPENAI_API_KEY
 
 # Initialize AI state and last response as global variables
