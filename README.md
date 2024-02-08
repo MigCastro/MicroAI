@@ -13,7 +13,7 @@ Micro AI is your personal voice assistant, powered by OpenAI's GPT-3. It allows 
 
 1. Clone this repository:
 
-git clone https://github.com/your-username/micro-ai.git
+git clone https://github.com/MigCastro/MicroAI.git
 
 
 2. Install required packages:
