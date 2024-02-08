@@ -43,7 +43,7 @@ def ask_question():
 def generate_openai_response(user_question):
     try:
         response = openai.Completion.create(
-            engine="text-davinci-002",
+            engine="gpt-3.5-turbo-instruct",
             prompt=f"'{user_question}'",
             max_tokens=100,
             n=1,
